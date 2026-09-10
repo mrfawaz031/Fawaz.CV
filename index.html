@@ -102,6 +102,14 @@
     padding:168px 24px 72px;
     text-align:center;
   }
+  .hero-spline{
+    position:absolute; inset:0; z-index:1;
+    pointer-events:none; opacity:.55;
+    -webkit-mask-image:linear-gradient(to bottom, #000 45%, transparent 94%);
+    mask-image:linear-gradient(to bottom, #000 45%, transparent 94%);
+  }
+  .hero-spline spline-viewer{width:100%; height:100%; display:block;}
+  @media (max-width:700px){ .hero-spline{display:none;} }
   .hero-inner{position:relative; z-index:2;}
   .badge-ring{
     width:104px; height:104px; margin:0 auto 28px;
@@ -524,6 +532,7 @@
 </header>
 
 <section class="hero">
+  <div class="hero-spline" id="heroSpline" aria-hidden="true"></div>
   <div class="hero-inner">
     <div class="badge-ring">
       <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#22d9c2" stroke-width="1.6"><circle cx="12" cy="5" r="2.2"/><circle cx="5" cy="17" r="2.2"/><circle cx="19" cy="17" r="2.2"/><path d="M12 7.2v4M12 11.2 6.6 15M12 11.2 17.4 15"/></svg>
@@ -1150,6 +1159,20 @@
   window.addEventListener('resize', () => { bgResize(); bgInit(); });
   bgResize(); bgInit();
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches){ bgTick(); }
+
+  // Spline 3D hero background — desktop only, skipped for reduced-motion users.
+  // Placeholder scene: swap the url below for your own from spline.design (Export → Code Export → copy the Viewer URL).
+  const heroSpline = document.getElementById('heroSpline');
+  if (heroSpline && window.innerWidth > 700 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    const splineScript = document.createElement('script');
+    splineScript.type = 'module';
+    splineScript.src = 'https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js';
+    document.head.appendChild(splineScript);
+    const viewer = document.createElement('spline-viewer');
+    viewer.setAttribute('url', 'https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode');
+    viewer.setAttribute('loading-anim-type', 'none');
+    heroSpline.appendChild(viewer);
+  }
 </script>
 </body>
 </html>
