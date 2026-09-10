@@ -7,9 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-  @property --progress{
-    syntax:'<number>'; inherits:true; initial-value:0;
-  }
   :root{
     --bg:#050608;
     --bg-soft:#0a0b12;
@@ -245,7 +242,7 @@
     .about-grid{grid-template-columns:1fr; text-align:center;}
     #about .about-grid .lead{margin:0 auto; text-align:center;}
   }
-  .about-visual{display:flex; flex-direction:column; align-items:center; gap:20px; opacity:1; transform:none; transition:opacity .05s linear;}
+  .about-visual{display:flex; flex-direction:column; align-items:center; gap:20px;}
   .about-avatar{
     width:150px; height:150px; border-radius:50%; flex-shrink:0;
     background:linear-gradient(155deg, var(--surface-2), var(--surface));
@@ -264,11 +261,6 @@
   }
   .about-stat b{display:block; font-family:'Space Grotesk',sans-serif; font-size:20px; color:var(--gold); margin-bottom:2px;}
   .about-stat span{font-size:11.5px; color:var(--text-muted); display:block; line-height:1.3;}
-  .about-text{opacity:1; transform:none; transition:opacity .05s linear;}
-  body.st-ready .about-visual, body.st-ready .about-text{
-    opacity:var(--progress,1);
-    transform:translate3d(0, calc(22px - 22px * var(--progress,1)), 0);
-  }
 
   /* ---------- Experience ---------- */
   .exp-card{
@@ -407,11 +399,6 @@
     background:linear-gradient(120deg, rgba(231,178,78,.14), rgba(231,178,78,.03));
     border:1px solid rgba(231,178,78,.35); border-radius:var(--radius-card);
     padding:18px 22px; margin-bottom:34px;
-    opacity:1; transform:none; transition:opacity .05s linear;
-  }
-  body.st-ready .sce-badge{
-    opacity:var(--progress,1);
-    transform:translate3d(0, calc(18px - 18px * var(--progress,1)), 0);
   }
   .sce-badge svg{width:26px; height:26px; stroke:var(--gold); flex-shrink:0;}
   .sce-badge strong{display:block; font-size:15px;}
@@ -423,16 +410,11 @@
     display:flex; align-items:center; gap:20px;
     background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-card);
     padding:16px; cursor:pointer; transition:border-color .25s, transform .25s;
-    --hover-y:0px; opacity:1;
   }
-  .cert-row:hover{border-color:var(--gold); --hover-y:-2px;}
+  .cert-row:hover{border-color:var(--gold); transform:translateY(-2px);}
   @media (max-width:560px){
     .cert-row{flex-wrap:wrap;}
     .cert-actions{width:100%; justify-content:space-between; margin-top:4px;}
-  }
-  body.st-ready .cert-row{
-    opacity:var(--progress,1);
-    transform:perspective(900px) translateY(calc(26px - 26px * var(--progress,1))) rotateX(calc(4deg - 4deg * var(--progress,1))) translateY(var(--hover-y,0px));
   }
   .cert-thumb{
     width:84px; height:84px; flex-shrink:0; border-radius:10px; overflow:hidden;
@@ -503,6 +485,20 @@
   .cert-paper .date .dv{font-size:13.5px; font-weight:700; border-top:1px solid var(--paper-line); padding-top:6px; margin-top:20px;}
   .cert-paper .date .dl{font-size:11px; color:#8a6c2e;}
 
+  /* ---------- 3D certificate viewer (Three.js) ---------- */
+  .cert-3d-wrap{
+    width:min(560px, 100%); display:flex; flex-direction:column; align-items:center; gap:14px;
+  }
+  .cert-3d-stage{
+    width:100%; aspect-ratio:900/1040; border-radius:10px; overflow:hidden;
+    box-shadow:0 30px 80px rgba(0,0,0,.5);
+  }
+  .cert-3d-stage canvas{width:100%; height:100%; display:block; cursor:grab; touch-action:none;}
+  .cert-3d-stage canvas:active{cursor:grabbing;}
+  .cert-3d-hint{
+    margin:0; font-family:'Space Grotesk',sans-serif; font-size:12px; color:var(--text-muted); text-align:center;
+  }
+
   /* ---------- Languages ---------- */
   .lang-bars{display:grid; gap:20px; max-width:420px;}
   .lang-row{display:flex; align-items:center; gap:16px;}
@@ -516,13 +512,11 @@
     padding:70px 24px 40px; text-align:center; border-top:1px solid var(--line); margin-top:20px;
     background:linear-gradient(165deg, #241a4a 0%, var(--bg-soft) 70%);
   }
-  footer::after{
-    content:''; position:absolute; inset:0; z-index:1; pointer-events:none;
-    background:var(--bg); opacity:1;
+  .footer-mask{
+    position:absolute; inset:0; z-index:1; pointer-events:none;
+    background:var(--bg);
   }
-  body.st-ready footer::after{opacity:calc(1 - var(--progress,1));}
-  footer > *{position:relative; z-index:2;}
-  body.st-ready footer > *{transform:translate3d(0, calc(30px - 30px * var(--progress,1)), 0);}
+  footer > *:not(.footer-mask){position:relative; z-index:2;}
   footer h2{font-size:clamp(22px,3vw,28px); margin:0 0 14px;}
   footer p{color:var(--text-muted); margin:0 0 34px;}
   .contact-hub{
@@ -639,7 +633,7 @@
 
 <section id="about">
   <div class="wrap about-grid">
-    <div class="about-visual" string="progress" string-exit-vp="bottom">
+    <div class="about-visual">
       <div class="about-avatar">
         <span lang="ar">ف.ر</span>
         <span lang="en">FR</span>
@@ -657,7 +651,7 @@
         </div>
       </div>
     </div>
-    <div class="about-text" string="progress" string-exit-vp="bottom">
+    <div class="about-text">
       <p class="eyebrow" lang="ar">نبذة عني</p>
       <p class="eyebrow" lang="en">About</p>
       <h2 class="h-title" lang="ar">من قسم العمليات إلى منسق مشروع خلال ٤ أشهر</h2>
@@ -869,7 +863,7 @@
     <h2 class="h-title" lang="ar">شهادات معتمدة</h2>
     <h2 class="h-title" lang="en">Certifications earned</h2>
 
-    <div class="sce-badge" string="progress" string-exit-vp="bottom">
+    <div class="sce-badge">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="m12 3 8 3.5v5c0 4.7-3.2 8.6-8 9.9-4.8-1.3-8-5.2-8-9.9v-5L12 3Z"/><path d="m9 12 2 2 4-4"/></svg>
       <div>
         <strong lang="ar">الهيئة السعودية للمهندسين (SCE) — فني شبكات معتمد</strong>
@@ -880,7 +874,7 @@
 
     <div class="cert-list">
 
-      <div class="cert-row" data-cert="intro" string="progress" string-exit-vp="bottom">
+      <div class="cert-row" data-cert="intro">
         <div class="cert-thumb"><div class="mini">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="m12 3 8 3.5v5c0 4.7-3.2 8.6-8 9.9-4.8-1.3-8-5.2-8-9.9v-5L12 3Z"/></svg>
           <span class="ml">CCNAv7</span>
@@ -903,7 +897,7 @@
         </div>
       </div>
 
-      <div class="cert-row" data-cert="srwe1" string="progress" string-exit-vp="bottom">
+      <div class="cert-row" data-cert="srwe1">
         <div class="cert-thumb"><div class="mini">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="m12 3 8 3.5v5c0 4.7-3.2 8.6-8 9.9-4.8-1.3-8-5.2-8-9.9v-5L12 3Z"/></svg>
           <span class="ml">CCNAv7</span>
@@ -926,7 +920,7 @@
         </div>
       </div>
 
-      <div class="cert-row" data-cert="srwe2" string="progress" string-exit-vp="bottom">
+      <div class="cert-row" data-cert="srwe2">
         <div class="cert-thumb"><div class="mini">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="m12 3 8 3.5v5c0 4.7-3.2 8.6-8 9.9-4.8-1.3-8-5.2-8-9.9v-5L12 3Z"/></svg>
           <span class="ml">CCNAv7</span>
@@ -976,7 +970,8 @@
   </div>
 </section>
 
-<footer id="contact" string="progress" string-exit-vp="bottom">
+<footer id="contact">
+  <div class="footer-mask" aria-hidden="true"></div>
   <h2 lang="ar">لنعمل معاً</h2>
   <h2 lang="en">Let's work together</h2>
   <p lang="ar">متاح لفرص جديدة في تنسيق المشاريع والشبكات وتطوير الويب.</p>
@@ -1035,6 +1030,13 @@
 
 <div class="modal-overlay" id="modalOverlay">
   <button class="modal-close" id="modalClose">&times;</button>
+  <div class="cert-3d-wrap" id="cert3dWrap" hidden>
+    <div class="cert-3d-stage" id="cert3dStage"></div>
+    <p class="cert-3d-hint">
+      <span lang="ar">اسحب للتدوير · مرّر للتكبير</span>
+      <span lang="en">Drag to rotate · Scroll to zoom</span>
+    </p>
+  </div>
   <div class="cert-paper" id="certPaper">
     <svg class="cert-seal" viewBox="0 0 24 24" fill="none" stroke="#8a6c2e" stroke-width="1.4"><path d="m12 3 8 3.5v5c0 4.7-3.2 8.6-8 9.9-4.8-1.3-8-5.2-8-9.9v-5L12 3Z"/><path d="m9 12 2 2 4-4"/></svg>
     <p class="kicker" lang="ar" dir="rtl">هذه الشهادة ممنوحة إلى</p>
@@ -1155,6 +1157,16 @@
   document.addEventListener('keydown', e => { if (e.key === 'Escape'){ docOverlay.classList.remove('open'); docFrame.src=''; } });
 
   const overlay = document.getElementById('modalOverlay');
+  const cert3dWrap = document.getElementById('cert3dWrap');
+  const cert3dStage = document.getElementById('cert3dStage');
+  const certPaper = document.getElementById('certPaper');
+  let cert3DCleanup = null;
+
+  function closeCertModal(){
+    overlay.classList.remove('open');
+    if (cert3DCleanup){ cert3DCleanup(); cert3DCleanup = null; }
+  }
+
   document.querySelectorAll('.cert-row').forEach(row => {
     row.addEventListener('click', () => {
       const c = certs[row.dataset.cert];
@@ -1164,11 +1176,26 @@
       document.getElementById('mRole').textContent = c.role;
       document.getElementById('mDate').textContent = c.date;
       overlay.classList.add('open');
+
+      if (window.THREE && cert3dWrap && cert3dStage){
+        try {
+          certPaper.hidden = true;
+          cert3dWrap.hidden = false;
+          if (cert3DCleanup) cert3DCleanup();
+          cert3DCleanup = renderCert3D(cert3dStage, c);
+        } catch(e){
+          certPaper.hidden = false;
+          cert3dWrap.hidden = true;
+        }
+      } else {
+        certPaper.hidden = false;
+        if (cert3dWrap) cert3dWrap.hidden = true;
+      }
     });
   });
-  document.getElementById('modalClose').addEventListener('click', () => overlay.classList.remove('open'));
-  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') overlay.classList.remove('open'); });
+  document.getElementById('modalClose').addEventListener('click', closeCertModal);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeCertModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCertModal(); });
 
   // Scroll progress bar + active nav link
   const progress = document.getElementById('navProgress');
@@ -1314,24 +1341,186 @@
     frame();
   })();
 
-  // StringTune scroll-driven reveal (certificates, about, footer).
-  // Loaded asynchronously so a slow/blocked CDN can never delay or freeze
-  // the rest of the site's JS (lang toggle, PDF modals, nav, etc. above
-  // already ran by this point regardless). Progressive enhancement only:
-  // elements are fully visible by default via CSS, and only switch to the
-  // scroll-linked reveal once 'st-ready' is confirmed active.
+  // GSAP + ScrollTrigger — cinematic scroll-driven reveals and hero parallax.
+  // Loaded asynchronously, after every bit of core site JS above has already
+  // run, so a slow/blocked CDN can never delay or freeze the rest of the
+  // site (lang toggle, PDF modals, nav). Content is fully visible by default
+  // via plain CSS; gsap.from() only sets a hidden starting state at the
+  // moment it successfully runs, so a failed load just leaves everything
+  // exactly as it already renders.
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-    const stScript = document.createElement('script');
-    stScript.src = 'https://unpkg.com/@fiddle-digital/string-tune@1.2.1/dist/index.js';
-    stScript.onload = function(){
-      try {
-        const stringTune = StringTune.StringTune.getInstance();
-        stringTune.use(StringTune.StringProgress);
-        stringTune.start(0);
-        document.body.classList.add('st-ready');
-      } catch(e){ /* fails safe: content stays fully visible without the scroll reveal */ }
+    const gsapScript = document.createElement('script');
+    gsapScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js';
+    gsapScript.onload = function(){
+      const stPlugin = document.createElement('script');
+      stPlugin.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js';
+      stPlugin.onload = function(){ try { initScrollCinematics(); } catch(e){ /* fails safe */ } };
+      document.head.appendChild(stPlugin);
     };
-    document.head.appendChild(stScript);
+    document.head.appendChild(gsapScript);
+  }
+
+  function initScrollCinematics(){
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Hero: cinematic scroll-linked zoom-out + fade as the user scrolls past it.
+    gsap.to('.hero-inner', {
+      scale: .88, opacity: 0, y: -50, ease: 'none',
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+    });
+
+    function revealEach(selector, vars){
+      document.querySelectorAll(selector).forEach(el => {
+        gsap.from(el, Object.assign({
+          opacity: 0, y: 46, duration: .9, ease: 'power3.out', clearProps: 'transform,opacity',
+          scrollTrigger: { trigger: el, start: 'top 87%', toggleActions: 'play none none reverse' }
+        }, vars));
+      });
+    }
+    function revealGroup(selector, containerSelector, vars){
+      const els = document.querySelectorAll(selector);
+      if (!els.length) return;
+      gsap.from(els, Object.assign({
+        opacity: 0, y: 46, duration: .8, ease: 'power3.out', stagger: .12, clearProps: 'transform,opacity',
+        scrollTrigger: { trigger: containerSelector, start: 'top 85%', toggleActions: 'play none none reverse' }
+      }, vars));
+    }
+
+    revealEach('.about-visual, .about-text');
+    revealEach('.sce-badge');
+    revealGroup('.cert-row', '.cert-list');
+    revealEach('.exp-card');
+    revealGroup('.proj-card', '.proj-grid');
+    revealGroup('.skill-group', '.skill-groups');
+    revealEach('.edu-card');
+    revealEach('footer#contact h2, footer#contact p, footer#contact .contact-hub, footer#contact .cta-row, footer#contact .foot-note');
+
+    // Footer color-mask "shift reveal" — scrubs open as the footer scrolls into view.
+    gsap.to('.footer-mask', {
+      opacity: 0, ease: 'none',
+      scrollTrigger: { trigger: 'footer#contact', start: 'top 90%', end: 'top 30%', scrub: true }
+    });
+  }
+
+  // Three.js 3D certificate viewer — fully optional enhancement.
+  // Pre-warmed in the background; if it never loads (blocked/slow CDN), the
+  // flat paper certificate modal (already fully functional) is used instead —
+  // see the cert-row click handler above, which checks window.THREE first.
+  (function(){
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+    document.head.appendChild(s);
+  })();
+
+  function wrapCanvasText(ctx, text, x, y, maxWidth, lineHeight){
+    const words = text.split(' ');
+    let line = '', lines = [];
+    words.forEach(word => {
+      const test = line + word + ' ';
+      if (ctx.measureText(test).width > maxWidth && line){ lines.push(line); line = word + ' '; }
+      else line = test;
+    });
+    lines.push(line);
+    const startY = y - (lines.length - 1) * lineHeight / 2;
+    lines.forEach((l, i) => ctx.fillText(l.trim(), x, startY + i * lineHeight));
+  }
+
+  function buildCertTexture(c){
+    const isEn = document.documentElement.classList.contains('en');
+    const w = 900, h = 1040;
+    const cv = document.createElement('canvas');
+    cv.width = w; cv.height = h;
+    const ctx = cv.getContext('2d');
+    ctx.fillStyle = '#faf3e2'; ctx.fillRect(0, 0, w, h);
+    ctx.strokeStyle = '#c8a45c'; ctx.lineWidth = 6; ctx.strokeRect(3, 3, w - 6, h - 6);
+    ctx.lineWidth = 2; ctx.strokeRect(24, 24, w - 48, h - 48);
+    ctx.strokeStyle = '#8a6c2e'; ctx.lineWidth = 5;
+    ctx.beginPath(); ctx.arc(w / 2, 118, 46, 0, Math.PI * 2); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(w / 2 - 18, 118); ctx.lineTo(w / 2 - 4, 134); ctx.lineTo(w / 2 + 22, 100); ctx.stroke();
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#8a6c2e'; ctx.font = '600 22px "Space Grotesk", sans-serif';
+    ctx.fillText(isEn ? 'THIS CERTIFICATE IS AWARDED TO' : 'هذه الشهادة ممنوحة إلى', w / 2, 210);
+    ctx.fillStyle = '#2b2013'; ctx.font = '800 50px "Space Grotesk", sans-serif';
+    ctx.fillText(c.name, w / 2, 280);
+    ctx.fillStyle = '#5c4a26'; ctx.font = '500 22px "Space Grotesk", sans-serif';
+    ctx.fillText(isEn ? 'for successfully completing' : 'لإتمامه بنجاح', w / 2, 330);
+    ctx.fillStyle = '#2b2013'; ctx.font = '700 32px "Space Grotesk", sans-serif';
+    wrapCanvasText(ctx, c.course, w / 2, 400, w - 160, 42);
+    ctx.fillStyle = '#5c4a26'; ctx.font = '500 20px "Space Grotesk", sans-serif';
+    ctx.fillText(isEn ? 'through the Cisco Networking Academy program' : 'من خلال برنامج أكاديمية سيسكو للشبكات', w / 2, 500);
+    ctx.strokeStyle = '#c8a45c'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(120, 860); ctx.lineTo(400, 860); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(w - 400, 860); ctx.lineTo(w - 120, 860); ctx.stroke();
+    ctx.fillStyle = '#2b2013'; ctx.font = '700 24px "Space Grotesk", sans-serif';
+    ctx.fillText(c.signer, 260, 895);
+    ctx.fillText(c.date, w - 260, 895);
+    ctx.fillStyle = '#8a6c2e'; ctx.font = '500 16px "Space Grotesk", sans-serif';
+    ctx.fillText(c.role, 260, 920);
+    ctx.fillText(isEn ? 'Completion Date' : 'تاريخ الإتمام', w - 260, 920);
+    return cv;
+  }
+
+  function renderCert3D(container, c){
+    const texCanvas = buildCertTexture(c);
+    const w = container.clientWidth, h = container.clientHeight;
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(35, w / h, 0.1, 100);
+    camera.position.set(0, 0, 4.4);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(w, h);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    container.innerHTML = '';
+    container.appendChild(renderer.domElement);
+
+    const texture = new THREE.CanvasTexture(texCanvas);
+    const aspect = texCanvas.width / texCanvas.height;
+    const geo = new THREE.PlaneGeometry(3.2 * aspect, 3.2);
+    const mat = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
+    const mesh = new THREE.Mesh(geo, mat);
+    scene.add(mesh);
+    const backMat = new THREE.MeshBasicMaterial({ color: 0x1a1020, side: THREE.DoubleSide });
+    const back = new THREE.Mesh(geo, backMat);
+    back.position.z = -0.02;
+    scene.add(back);
+
+    let rotY = -0.35, rotX = -0.1, dragging = false, lastX = 0, lastY = 0, autoSpin = true;
+    mesh.rotation.set(rotX, rotY, 0);
+    back.rotation.set(rotX, rotY, 0);
+
+    const pointX = e => (e.touches ? e.touches[0].clientX : e.clientX);
+    const pointY = e => (e.touches ? e.touches[0].clientY : e.clientY);
+    const onDown = e => { dragging = true; autoSpin = false; lastX = pointX(e); lastY = pointY(e); };
+    const onMove = e => {
+      if (!dragging) return;
+      const x = pointX(e), y = pointY(e);
+      rotY += (x - lastX) * 0.006;
+      rotX = Math.max(-1, Math.min(1, rotX + (y - lastY) * 0.006));
+      lastX = x; lastY = y;
+    };
+    const onUp = () => { dragging = false; };
+    const onWheel = e => { e.preventDefault(); camera.position.z = Math.max(2.4, Math.min(7, camera.position.z + e.deltaY * 0.003)); };
+    renderer.domElement.addEventListener('pointerdown', onDown);
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp);
+    renderer.domElement.addEventListener('wheel', onWheel, { passive: false });
+
+    let animId;
+    function frame(){
+      if (autoSpin) rotY += 0.0025;
+      mesh.rotation.set(rotX, rotY, 0);
+      back.rotation.set(rotX, rotY, 0);
+      renderer.render(scene, camera);
+      animId = requestAnimationFrame(frame);
+    }
+    frame();
+
+    return function cleanup(){
+      cancelAnimationFrame(animId);
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+      geo.dispose(); mat.dispose(); backMat.dispose(); texture.dispose(); renderer.dispose();
+      container.innerHTML = '';
+    };
   }
 </script>
 </body>
