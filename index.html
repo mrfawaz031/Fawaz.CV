@@ -109,7 +109,6 @@
     mask-image:linear-gradient(to bottom, #000 45%, transparent 94%);
   }
   .hero-spline spline-viewer{width:100%; height:100%; display:block;}
-  @media (max-width:700px){ .hero-spline{display:none;} }
   .hero-inner{position:relative; z-index:2;}
   .badge-ring{
     width:104px; height:104px; margin:0 auto 28px;
@@ -1160,10 +1159,10 @@
   bgResize(); bgInit();
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches){ bgTick(); }
 
-  // Spline 3D hero background — desktop only, skipped for reduced-motion users.
+  // Spline 3D hero background — skipped only for reduced-motion users.
   // Placeholder scene: swap the url below for your own from spline.design (Export → Code Export → copy the Viewer URL).
   const heroSpline = document.getElementById('heroSpline');
-  if (heroSpline && window.innerWidth > 700 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  if (heroSpline && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
     const splineScript = document.createElement('script');
     splineScript.type = 'module';
     splineScript.src = 'https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js';
