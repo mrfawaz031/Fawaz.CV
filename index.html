@@ -1062,7 +1062,6 @@
   </div>
 </div>
 
-<script src="https://unpkg.com/@fiddle-digital/string-tune@1.2.1/dist/index.js"></script>
 <script>
   // Embedded PDF sources (self-contained — works with no external hosting)
   const PDF_DATA = {
@@ -1251,15 +1250,23 @@
   }
 
   // StringTune scroll-driven reveal (certificates, about, footer).
-  // Progressive enhancement only: elements are fully visible by default via CSS,
-  // and only switch to the scroll-linked reveal once 'st-ready' is confirmed active.
-  if (window.StringTune && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-    try {
-      const stringTune = StringTune.StringTune.getInstance();
-      stringTune.use(StringTune.StringProgress);
-      stringTune.start(0);
-      document.body.classList.add('st-ready');
-    } catch(e){ /* fails safe: content stays fully visible without the scroll reveal */ }
+  // Loaded asynchronously so a slow/blocked CDN can never delay or freeze
+  // the rest of the site's JS (lang toggle, PDF modals, nav, etc. above
+  // already ran by this point regardless). Progressive enhancement only:
+  // elements are fully visible by default via CSS, and only switch to the
+  // scroll-linked reveal once 'st-ready' is confirmed active.
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    const stScript = document.createElement('script');
+    stScript.src = 'https://unpkg.com/@fiddle-digital/string-tune@1.2.1/dist/index.js';
+    stScript.onload = function(){
+      try {
+        const stringTune = StringTune.StringTune.getInstance();
+        stringTune.use(StringTune.StringProgress);
+        stringTune.start(0);
+        document.body.classList.add('st-ready');
+      } catch(e){ /* fails safe: content stays fully visible without the scroll reveal */ }
+    };
+    document.head.appendChild(stScript);
   }
 </script>
 </body>
