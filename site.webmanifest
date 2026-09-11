@@ -1,0 +1,13 @@
+{
+  "name": "Fawaz Saleh Al-Rutayq",
+  "short_name": "Fawaz",
+  "description": "Portfolio & CV — Project Coordinator, Web Developer",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050608",
+  "theme_color": "#8b6bff",
+  "icons": [
+    {"src": "favicon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "favicon-512.png", "sizes": "512x512", "type": "image/png"}
+  ]
+}
