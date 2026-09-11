@@ -508,6 +508,46 @@
   .bar-track{flex:1; height:8px; background:var(--surface); border-radius:100px; overflow:hidden;}
   .bar-fill{height:100%; border-radius:100px; background:linear-gradient(90deg, var(--teal-dim), var(--teal));}
 
+  /* ---------- Web Services ---------- */
+  .services-intro{text-align:center; max-width:640px; margin:0 auto 36px; color:var(--text-muted); font-size:15.5px; line-height:1.7;}
+  .services-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-bottom:40px;}
+  @media (max-width:700px){.services-grid{grid-template-columns:1fr;}}
+  .svc-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-card);
+    padding:28px 24px; text-align:center; transition:border-color .25s, transform .25s;
+  }
+  .svc-card:hover{border-color:var(--teal-dim); transform:translateY(-4px);}
+  .svc-icon{
+    width:52px; height:52px; border-radius:14px; margin:0 auto 16px;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(139,107,255,.1);
+  }
+  .svc-icon svg{width:26px; height:26px; stroke:var(--teal); fill:none; stroke-width:1.7;}
+  .svc-card h3{font-size:16px; font-weight:700; margin:0 0 8px;}
+  .svc-card p{font-size:13.5px; color:var(--text-muted); margin:0; line-height:1.6;}
+  .tools-strip{display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-bottom:36px;}
+  .tool-tag{
+    background:var(--surface); border:1px solid var(--line); border-radius:100px;
+    padding:7px 16px; font-size:13px; font-weight:600; color:var(--text-muted);
+    font-family:'Space Grotesk',sans-serif; letter-spacing:.3px;
+    transition:border-color .2s, color .2s;
+  }
+  .tool-tag:hover{border-color:var(--teal-dim); color:var(--text);}
+  .svc-cta{
+    text-align:center; padding:32px 24px; border-radius:var(--radius-card);
+    background:linear-gradient(135deg, rgba(139,107,255,.08), rgba(139,107,255,.02));
+    border:1px solid rgba(139,107,255,.2);
+  }
+  .svc-cta p{color:var(--text-muted); font-size:14.5px; margin:0 0 18px;}
+  .svc-cta a{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--teal); color:#fff; font-weight:600; font-size:15px;
+    padding:12px 28px; border-radius:100px; text-decoration:none;
+    transition:background .2s, transform .2s;
+  }
+  .svc-cta a:hover{background:#7a5be6; transform:translateY(-2px);}
+  .svc-cta a svg{width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2;}
+
   /* ---------- Footer / Contact hub ---------- */
   footer{
     position:relative; overflow:hidden;
@@ -565,6 +605,7 @@
       <a href="#projects" lang="ar">المشاريع</a><a href="#projects" lang="en">Projects</a>
       <a href="#skills" lang="ar">المهارات</a><a href="#skills" lang="en">Skills</a>
       <a href="#certificates" lang="ar">الشهادات</a><a href="#certificates" lang="en">Certificates</a>
+      <a href="#services" lang="ar">الخدمات</a><a href="#services" lang="en">Services</a>
       <a href="#contact" lang="ar">تواصل</a><a href="#contact" lang="en">Contact</a>
     </nav>
     <div class="nav-actions">
@@ -985,6 +1026,62 @@
         <span class="lbl" lang="ar">الإنجليزية</span><span class="lbl" lang="en">English</span>
         <div class="bar-track"><div class="bar-fill" style="width:60%"></div></div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="alt">
+  <div class="wrap">
+    <p class="eyebrow" lang="ar">الخدمات</p>
+    <p class="eyebrow" lang="en">Services</p>
+    <h2 class="h-title" lang="ar">تطوير مواقع وحلول ويب</h2>
+    <h2 class="h-title" lang="en">Web Development &amp; Solutions</h2>
+
+    <p class="services-intro" lang="ar">أقدّم خدمات تصميم وتطوير مواقع إلكترونية احترافية للشركات والأفراد بأسعار رمزية ومناسبة. سواء كنت تحتاج موقع تعريفي لشركتك، صفحة هبوط لمنتجك، أو بورتفوليو شخصي — أتولى المشروع من الفكرة حتى الإطلاق.</p>
+    <p class="services-intro" lang="en">I offer professional website design and development services for businesses and individuals at affordable prices. Whether you need a company website, a product landing page, or a personal portfolio — I handle the project from concept to launch.</p>
+
+    <div class="services-grid">
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M7 20h10M12 16v4"/></svg></div>
+        <h3 lang="ar">مواقع تعريفية</h3>
+        <h3 lang="en">Business Websites</h3>
+        <p lang="ar">مواقع احترافية للشركات والمؤسسات تعكس هوية العلامة التجارية وتعرض الخدمات والمنتجات بشكل جذاب ومتجاوب مع جميع الأجهزة.</p>
+        <p lang="en">Professional websites for businesses that reflect brand identity and showcase services and products with a responsive, modern design.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="9"/></svg></div>
+        <h3 lang="ar">صفحات هبوط</h3>
+        <h3 lang="en">Landing Pages</h3>
+        <p lang="ar">صفحات هبوط مصممة لتحقيق أهداف تسويقية محددة، سواء لإطلاق منتج جديد، حملة إعلانية، أو جمع بيانات العملاء المحتملين.</p>
+        <p lang="en">Landing pages designed to achieve specific marketing goals — product launches, ad campaigns, or lead generation with clear calls to action.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-3.3 3.6-6 8-6s8 2.7 8 6"/></svg></div>
+        <h3 lang="ar">بورتفوليو شخصي</h3>
+        <h3 lang="en">Personal Portfolio</h3>
+        <p lang="ar">مواقع شخصية تعرض مؤهلاتك وخبراتك ومشاريعك بطريقة عصرية واحترافية، مع دعم كامل للعربية والإنجليزية.</p>
+        <p lang="en">Personal websites that showcase your qualifications, experience, and projects in a modern, professional style with full bilingual support.</p>
+      </div>
+    </div>
+
+    <div class="tools-strip">
+      <span class="tool-tag">HTML / CSS</span>
+      <span class="tool-tag">JavaScript</span>
+      <span class="tool-tag">Responsive Design</span>
+      <span class="tool-tag">GitHub Pages</span>
+      <span class="tool-tag">Custom Domains</span>
+      <span class="tool-tag">SEO</span>
+      <span class="tool-tag">PDF.js</span>
+      <span class="tool-tag">Bilingual (AR/EN)</span>
+    </div>
+
+    <div class="svc-cta">
+      <p lang="ar">تواصل معي عبر البريد الإلكتروني لمناقشة مشروعك واحتياجاتك — أرسل فكرتك وسأرد عليك بخطة عمل واضحة وتسعيرة مناسبة.</p>
+      <p lang="en">Get in touch via email to discuss your project and requirements — send your idea and I'll reply with a clear plan and affordable pricing.</p>
+      <a href="mailto:fawaz.alrutayq@gmail.com">
+        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 6.5 8 6 8-6"/></svg>
+        <span lang="ar">تواصل الآن</span><span lang="en">Get in Touch</span>
+      </a>
     </div>
   </div>
 </section>
@@ -1450,6 +1547,8 @@
     revealGroup('.proj-card', '.proj-grid');
     revealGroup('.skill-group', '.skill-groups');
     revealEach('.edu-card');
+    revealEach('.svc-card');
+    revealEach('.svc-cta');
     revealEach('footer#contact h2, footer#contact p, footer#contact .contact-hub, footer#contact .foot-note');
 
     // Footer color-mask "shift reveal" — scrubs open as the footer scrolls into view.
