@@ -487,17 +487,38 @@
 
   /* ---------- 3D certificate viewer (Three.js) ---------- */
   .cert-3d-wrap{
-    width:min(560px, 100%); display:flex; flex-direction:column; align-items:center; gap:14px;
+    width:min(760px, 100%); display:flex; flex-direction:column; align-items:center; gap:16px;
   }
+  .cert-3d-frame{width:100%; position:relative;}
   .cert-3d-stage{
-    width:100%; aspect-ratio:900/1040; border-radius:10px; overflow:hidden;
-    box-shadow:0 30px 80px rgba(0,0,0,.5);
+    width:100%; aspect-ratio:1.294; border-radius:14px; overflow:hidden;
+    background:radial-gradient(circle at 50% 45%, rgba(139,107,255,.14), var(--bg) 72%);
+    box-shadow:0 30px 90px rgba(0,0,0,.55);
   }
   .cert-3d-stage canvas{width:100%; height:100%; display:block; cursor:grab; touch-action:none;}
   .cert-3d-stage canvas:active{cursor:grabbing;}
+  .cert-3d-loading{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    transition:opacity .3s ease;
+  }
+  .cert-3d-loading.hidden{opacity:0; pointer-events:none;}
+  .cert-3d-loading .spin{
+    width:34px; height:34px; border-radius:50%;
+    border:3px solid rgba(139,107,255,.25); border-top-color:var(--teal);
+    animation:spin 0.9s linear infinite;
+  }
+  .cert-3d-controls{display:flex; align-items:center; justify-content:center; gap:18px; width:100%;}
   .cert-3d-hint{
     margin:0; font-family:'Space Grotesk',sans-serif; font-size:12px; color:var(--text-muted); text-align:center;
   }
+  .cert-3d-nav{
+    width:38px; height:38px; border-radius:50%; flex-shrink:0;
+    background:var(--surface); border:1px solid var(--line); color:var(--text);
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    transition:border-color .2s, transform .2s;
+  }
+  .cert-3d-nav:hover{border-color:var(--teal); transform:translateY(-2px);}
+  .cert-3d-nav svg{width:18px; height:18px; stroke:currentColor;}
 
   /* ---------- Languages ---------- */
   .lang-bars{display:grid; gap:20px; max-width:420px;}
@@ -1031,11 +1052,22 @@
 <div class="modal-overlay" id="modalOverlay">
   <button class="modal-close" id="modalClose">&times;</button>
   <div class="cert-3d-wrap" id="cert3dWrap" hidden>
-    <div class="cert-3d-stage" id="cert3dStage"></div>
-    <p class="cert-3d-hint">
-      <span lang="ar">اسحب للتدوير · مرّر للتكبير</span>
-      <span lang="en">Drag to rotate · Scroll to zoom</span>
-    </p>
+    <div class="cert-3d-frame">
+      <div class="cert-3d-stage" id="cert3dStage"></div>
+      <div class="cert-3d-loading" id="cert3dLoading"><span class="spin"></span></div>
+    </div>
+    <div class="cert-3d-controls">
+      <button type="button" class="cert-3d-nav" id="cert3dPrev" aria-label="Previous certificate">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg>
+      </button>
+      <p class="cert-3d-hint">
+        <span lang="ar">اسحب للتدوير · مرّر للتكبير</span>
+        <span lang="en">Drag to rotate · Scroll to zoom</span>
+      </p>
+      <button type="button" class="cert-3d-nav" id="cert3dNext" aria-label="Next certificate">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+    </div>
   </div>
   <div class="cert-paper" id="certPaper">
     <svg class="cert-seal" viewBox="0 0 24 24" fill="none" stroke="#8a6c2e" stroke-width="1.4"><path d="m12 3 8 3.5v5c0 4.7-3.2 8.6-8 9.9-4.8-1.3-8-5.2-8-9.9v-5L12 3Z"/><path d="m9 12 2 2 4-4"/></svg>
@@ -1159,43 +1191,80 @@
   const overlay = document.getElementById('modalOverlay');
   const cert3dWrap = document.getElementById('cert3dWrap');
   const cert3dStage = document.getElementById('cert3dStage');
+  const cert3dLoading = document.getElementById('cert3dLoading');
   const certPaper = document.getElementById('certPaper');
+  const certOrder = ['intro', 'srwe1', 'srwe2'];
+  const certPdfKey = { intro: 'certIntro', srwe1: 'certSRWE1', srwe2: 'certSRWE2' };
   let cert3DCleanup = null;
+  let currentCertKey = null;
+  let cert3DActive = false;
+
+  function fillCertInfo(key){
+    const c = certs[key];
+    document.getElementById('mName').textContent = c.name;
+    document.getElementById('mCourse').textContent = c.course;
+    document.getElementById('mSigner').textContent = c.signer;
+    document.getElementById('mRole').textContent = c.role;
+    document.getElementById('mDate').textContent = c.date;
+  }
+
+  async function showCert(key){
+    currentCertKey = key;
+    fillCertInfo(key);
+
+    if (window.THREE && window.pdfjsLib && cert3dWrap && cert3dStage){
+      cert3DActive = true;
+      certPaper.hidden = true;
+      cert3dWrap.hidden = false;
+      cert3dLoading.classList.remove('hidden');
+      try {
+        if (cert3DCleanup){ cert3DCleanup(); cert3DCleanup = null; }
+        const pdfUrl = PDF_DATA[certPdfKey[key]].data;
+        cert3DCleanup = await renderCert3D(cert3dStage, pdfUrl);
+        if (currentCertKey !== key) return; // a newer request has already superseded this one
+        cert3dLoading.classList.add('hidden');
+      } catch (e){
+        cert3DActive = false;
+        certPaper.hidden = false;
+        cert3dWrap.hidden = true;
+      }
+    } else {
+      cert3DActive = false;
+      certPaper.hidden = false;
+      if (cert3dWrap) cert3dWrap.hidden = true;
+    }
+  }
 
   function closeCertModal(){
     overlay.classList.remove('open');
     if (cert3DCleanup){ cert3DCleanup(); cert3DCleanup = null; }
+    cert3DActive = false;
   }
 
   document.querySelectorAll('.cert-row').forEach(row => {
     row.addEventListener('click', () => {
-      const c = certs[row.dataset.cert];
-      document.getElementById('mName').textContent = c.name;
-      document.getElementById('mCourse').textContent = c.course;
-      document.getElementById('mSigner').textContent = c.signer;
-      document.getElementById('mRole').textContent = c.role;
-      document.getElementById('mDate').textContent = c.date;
       overlay.classList.add('open');
-
-      if (window.THREE && cert3dWrap && cert3dStage){
-        try {
-          certPaper.hidden = true;
-          cert3dWrap.hidden = false;
-          if (cert3DCleanup) cert3DCleanup();
-          cert3DCleanup = renderCert3D(cert3dStage, c);
-        } catch(e){
-          certPaper.hidden = false;
-          cert3dWrap.hidden = true;
-        }
-      } else {
-        certPaper.hidden = false;
-        if (cert3dWrap) cert3dWrap.hidden = true;
-      }
+      showCert(row.dataset.cert);
     });
+  });
+  document.getElementById('cert3dPrev').addEventListener('click', () => {
+    if (!currentCertKey) return;
+    const i = certOrder.indexOf(currentCertKey);
+    showCert(certOrder[(i - 1 + certOrder.length) % certOrder.length]);
+  });
+  document.getElementById('cert3dNext').addEventListener('click', () => {
+    if (!currentCertKey) return;
+    const i = certOrder.indexOf(currentCertKey);
+    showCert(certOrder[(i + 1) % certOrder.length]);
   });
   document.getElementById('modalClose').addEventListener('click', closeCertModal);
   overlay.addEventListener('click', e => { if (e.target === overlay) closeCertModal(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCertModal(); });
+  document.addEventListener('keydown', e => {
+    if (!overlay.classList.contains('open')) return;
+    if (e.key === 'Escape') closeCertModal();
+    if (cert3DActive && e.key === 'ArrowLeft') document.getElementById('cert3dPrev').click();
+    if (cert3DActive && e.key === 'ArrowRight') document.getElementById('cert3dNext').click();
+  });
 
   // Scroll progress bar + active nav link
   const progress = document.getElementById('navProgress');
@@ -1402,90 +1471,105 @@
     });
   }
 
-  // Three.js 3D certificate viewer — fully optional enhancement.
-  // Pre-warmed in the background; if it never loads (blocked/slow CDN), the
-  // flat paper certificate modal (already fully functional) is used instead —
-  // see the cert-row click handler above, which checks window.THREE first.
+  // Three.js + PDF.js 3D certificate viewer — fully optional enhancement.
+  // Both pre-warmed in the background; if either never loads (blocked/slow
+  // CDN), the flat paper certificate modal (already fully functional) is
+  // used instead — see showCert() above, which checks window.THREE and
+  // window.pdfjsLib first.
   (function(){
     const s = document.createElement('script');
     s.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
     document.head.appendChild(s);
   })();
+  (function(){
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+    s.onload = function(){
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    };
+    document.head.appendChild(s);
+  })();
 
-  function wrapCanvasText(ctx, text, x, y, maxWidth, lineHeight){
-    const words = text.split(' ');
-    let line = '', lines = [];
-    words.forEach(word => {
-      const test = line + word + ' ';
-      if (ctx.measureText(test).width > maxWidth && line){ lines.push(line); line = word + ' '; }
-      else line = test;
-    });
-    lines.push(line);
-    const startY = y - (lines.length - 1) * lineHeight / 2;
-    lines.forEach((l, i) => ctx.fillText(l.trim(), x, startY + i * lineHeight));
+  // Renders page 1 of a PDF to a canvas at a given pixel width — used to get
+  // the *real* certificate artwork (Cisco logo, watermark, signature, exact
+  // layout) onto the 3D card instead of a hand-drawn approximation.
+  async function renderPdfPageToCanvas(url, targetWidth){
+    const pdf = await pdfjsLib.getDocument(url).promise;
+    const page = await pdf.getPage(1);
+    const baseViewport = page.getViewport({ scale: 1 });
+    const scale = targetWidth / baseViewport.width;
+    const viewport = page.getViewport({ scale });
+    const canvas = document.createElement('canvas');
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+    await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+    return canvas;
   }
 
-  function buildCertTexture(c){
-    const isEn = document.documentElement.classList.contains('en');
-    const w = 900, h = 1040;
-    const cv = document.createElement('canvas');
-    cv.width = w; cv.height = h;
-    const ctx = cv.getContext('2d');
-    ctx.fillStyle = '#faf3e2'; ctx.fillRect(0, 0, w, h);
-    ctx.strokeStyle = '#c8a45c'; ctx.lineWidth = 6; ctx.strokeRect(3, 3, w - 6, h - 6);
-    ctx.lineWidth = 2; ctx.strokeRect(24, 24, w - 48, h - 48);
-    ctx.strokeStyle = '#8a6c2e'; ctx.lineWidth = 5;
-    ctx.beginPath(); ctx.arc(w / 2, 118, 46, 0, Math.PI * 2); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(w / 2 - 18, 118); ctx.lineTo(w / 2 - 4, 134); ctx.lineTo(w / 2 + 22, 100); ctx.stroke();
-    ctx.textAlign = 'center';
-    ctx.fillStyle = '#8a6c2e'; ctx.font = '600 22px "Space Grotesk", sans-serif';
-    ctx.fillText(isEn ? 'THIS CERTIFICATE IS AWARDED TO' : 'هذه الشهادة ممنوحة إلى', w / 2, 210);
-    ctx.fillStyle = '#2b2013'; ctx.font = '800 50px "Space Grotesk", sans-serif';
-    ctx.fillText(c.name, w / 2, 280);
-    ctx.fillStyle = '#5c4a26'; ctx.font = '500 22px "Space Grotesk", sans-serif';
-    ctx.fillText(isEn ? 'for successfully completing' : 'لإتمامه بنجاح', w / 2, 330);
-    ctx.fillStyle = '#2b2013'; ctx.font = '700 32px "Space Grotesk", sans-serif';
-    wrapCanvasText(ctx, c.course, w / 2, 400, w - 160, 42);
-    ctx.fillStyle = '#5c4a26'; ctx.font = '500 20px "Space Grotesk", sans-serif';
-    ctx.fillText(isEn ? 'through the Cisco Networking Academy program' : 'من خلال برنامج أكاديمية سيسكو للشبكات', w / 2, 500);
-    ctx.strokeStyle = '#c8a45c'; ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.moveTo(120, 860); ctx.lineTo(400, 860); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(w - 400, 860); ctx.lineTo(w - 120, 860); ctx.stroke();
-    ctx.fillStyle = '#2b2013'; ctx.font = '700 24px "Space Grotesk", sans-serif';
-    ctx.fillText(c.signer, 260, 895);
-    ctx.fillText(c.date, w - 260, 895);
-    ctx.fillStyle = '#8a6c2e'; ctx.font = '500 16px "Space Grotesk", sans-serif';
-    ctx.fillText(c.role, 260, 920);
-    ctx.fillText(isEn ? 'Completion Date' : 'تاريخ الإتمام', w - 260, 920);
-    return cv;
-  }
+  async function renderCert3D(container, pdfUrl){
+    const texCanvas = await renderPdfPageToCanvas(pdfUrl, 1600);
 
-  function renderCert3D(container, c){
-    const texCanvas = buildCertTexture(c);
     const w = container.clientWidth, h = container.clientHeight;
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(35, w / h, 0.1, 100);
-    camera.position.set(0, 0, 4.4);
+    const camera = new THREE.PerspectiveCamera(30, w / h, 0.1, 100);
+    camera.position.set(0, 0.15, 5.4);
+    camera.lookAt(0, 0, 0);
+
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(w, h);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.outputEncoding = THREE.sRGBEncoding;
     container.innerHTML = '';
     container.appendChild(renderer.domElement);
 
-    const texture = new THREE.CanvasTexture(texCanvas);
-    const aspect = texCanvas.width / texCanvas.height;
-    const geo = new THREE.PlaneGeometry(3.2 * aspect, 3.2);
-    const mat = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
-    const mesh = new THREE.Mesh(geo, mat);
-    scene.add(mesh);
-    const backMat = new THREE.MeshBasicMaterial({ color: 0x1a1020, side: THREE.DoubleSide });
-    const back = new THREE.Mesh(geo, backMat);
-    back.position.z = -0.02;
-    scene.add(back);
+    // Lighting — a soft key light (casts the shadow), a cool ambient fill,
+    // and two accent rim lights in the site's own violet/cyan palette so the
+    // card genuinely looks lit as it turns, not just a flat rotating image.
+    scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+    const key = new THREE.DirectionalLight(0xffffff, 0.85);
+    key.position.set(2.2, 3.2, 3.5);
+    key.castShadow = true;
+    key.shadow.mapSize.set(1024, 1024);
+    key.shadow.radius = 6;
+    scene.add(key);
+    const rimA = new THREE.PointLight(0x8b6bff, 1.1, 12);
+    rimA.position.set(-2.6, 1.2, 2.2);
+    scene.add(rimA);
+    const rimB = new THREE.PointLight(0x22e6ff, 0.7, 12);
+    rimB.position.set(2.4, -1.4, -1.6);
+    scene.add(rimB);
 
-    let rotY = -0.35, rotX = -0.1, dragging = false, lastX = 0, lastY = 0, autoSpin = true;
-    mesh.rotation.set(rotX, rotY, 0);
-    back.rotation.set(rotX, rotY, 0);
+    // Ground plane, receives the card's shadow to ground it in the scene.
+    const ground = new THREE.Mesh(
+      new THREE.PlaneGeometry(16, 16),
+      new THREE.ShadowMaterial({ opacity: 0.4 })
+    );
+    ground.position.z = -1.3;
+    ground.receiveShadow = true;
+    scene.add(ground);
+
+    const texture = new THREE.CanvasTexture(texCanvas);
+    texture.encoding = THREE.sRGBEncoding;
+    texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    const aspect = texCanvas.width / texCanvas.height;
+    const planeH = 3.05, planeW = planeH * aspect;
+    const geo = new THREE.PlaneGeometry(planeW, planeH);
+    const mat = new THREE.MeshStandardMaterial({ map: texture, roughness: 0.8, metalness: 0.04, side: THREE.DoubleSide });
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.castShadow = true;
+    const backMat = new THREE.MeshStandardMaterial({ color: 0x14101f, roughness: 0.9, side: THREE.DoubleSide });
+    const back = new THREE.Mesh(geo, backMat);
+    back.position.z = -0.015;
+    back.castShadow = true;
+
+    const group = new THREE.Group();
+    group.add(mesh, back);
+    group.position.z = -0.2;
+    scene.add(group);
+
+    let rotY = -0.4, rotX = -0.08, dragging = false, lastX = 0, lastY = 0, autoSpin = true;
 
     const pointX = e => (e.touches ? e.touches[0].clientX : e.clientX);
     const pointY = e => (e.touches ? e.touches[0].clientY : e.clientY);
@@ -1494,21 +1578,25 @@
       if (!dragging) return;
       const x = pointX(e), y = pointY(e);
       rotY += (x - lastX) * 0.006;
-      rotX = Math.max(-1, Math.min(1, rotX + (y - lastY) * 0.006));
+      rotX = Math.max(-0.9, Math.min(0.9, rotX + (y - lastY) * 0.006));
       lastX = x; lastY = y;
     };
     const onUp = () => { dragging = false; };
-    const onWheel = e => { e.preventDefault(); camera.position.z = Math.max(2.4, Math.min(7, camera.position.z + e.deltaY * 0.003)); };
+    const onWheel = e => { e.preventDefault(); camera.position.z = Math.max(3.4, Math.min(8, camera.position.z + e.deltaY * 0.003)); };
     renderer.domElement.addEventListener('pointerdown', onDown);
     window.addEventListener('pointermove', onMove);
     window.addEventListener('pointerup', onUp);
     renderer.domElement.addEventListener('wheel', onWheel, { passive: false });
 
-    let animId;
+    let animId, t = 0, intro = 0;
     function frame(){
-      if (autoSpin) rotY += 0.0025;
-      mesh.rotation.set(rotX, rotY, 0);
-      back.rotation.set(rotX, rotY, 0);
+      t += 0.016;
+      intro = Math.min(1, intro + 0.02);
+      const eased = 1 - Math.pow(1 - intro, 3);
+      if (autoSpin) rotY += 0.0022;
+      group.rotation.set(rotX, rotY, 0);
+      group.scale.setScalar(0.82 + 0.18 * eased);
+      group.position.y = Math.sin(t * 0.6) * 0.045;
       renderer.render(scene, camera);
       animId = requestAnimationFrame(frame);
     }
@@ -1518,7 +1606,9 @@
       cancelAnimationFrame(animId);
       window.removeEventListener('pointermove', onMove);
       window.removeEventListener('pointerup', onUp);
-      geo.dispose(); mat.dispose(); backMat.dispose(); texture.dispose(); renderer.dispose();
+      geo.dispose(); mat.dispose(); backMat.dispose(); texture.dispose();
+      ground.geometry.dispose(); ground.material.dispose();
+      renderer.dispose();
       container.innerHTML = '';
     };
   }
