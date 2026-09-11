@@ -403,7 +403,15 @@
   }
   .sce-badge:hover{border-color:rgba(231,178,78,.6); box-shadow:0 0 0 3px rgba(231,178,78,.12);}
   .sce-badge .cert-actions{margin-inline-start:auto;}
-  .sce-badge svg{width:26px; height:26px; stroke:var(--gold); flex-shrink:0;}
+  .sce-badge > svg{width:26px; height:26px; stroke:var(--gold); flex-shrink:0;}
+  .sce-thumb{
+    width:90px; height:70px; flex-shrink:0; border-radius:8px; overflow:hidden;
+    background:var(--paper); position:relative; border:1px solid rgba(231,178,78,.3);
+  }
+  .sce-thumb canvas{width:100%; height:100%; object-fit:contain; display:block;}
+  .sce-thumb .mini{display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; gap:2px; color:var(--gold);}
+  .sce-thumb .mini svg{width:22px; height:22px; stroke:var(--gold);}
+  .sce-thumb .mini .ml{font-size:10px; font-weight:600; letter-spacing:.5px;}
   .sce-badge strong{display:block; font-size:15px;}
   .sce-badge span{color:var(--text-muted); font-size:13.5px;}
   .sce-dot{width:8px; height:8px; border-radius:50%; background:#3ee08a; display:inline-block; margin-left:6px; margin-inline-end:6px; box-shadow:0 0 0 3px rgba(62,224,138,.2);}
@@ -834,7 +842,10 @@
     <h2 class="h-title" lang="en">Certifications earned</h2>
 
     <div class="sce-badge" id="sceBadge" role="button" tabindex="0">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7"><path d="m12 3 8 3.5v5c0 4.7-3.2 8.6-8 9.9-4.8-1.3-8-5.2-8-9.9v-5L12 3Z"/><path d="m9 12 2 2 4-4"/></svg>
+      <div class="sce-thumb" id="sceThumb"><div class="mini">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="m12 3 8 3.5v5c0 4.7-3.2 8.6-8 9.9-4.8-1.3-8-5.2-8-9.9v-5L12 3Z"/></svg>
+        <span class="ml">SCE</span>
+      </div></div>
       <div>
         <strong lang="ar">الهيئة السعودية للمهندسين (SCE) — فني شبكات معتمد</strong>
         <strong lang="en">Saudi Council of Engineers (SCE) — Certified Network Technician</strong>
@@ -1507,6 +1518,14 @@
         thumb.appendChild(canvas);
       } catch(e){ /* keep the plain icon placeholder for this row */ }
     });
+    // SCE badge thumbnail
+    (async function(){
+      try {
+        const canvas = await renderPdfPageToCanvas(PDF_DATA.certSCE.data, 260);
+        const el = document.getElementById('sceThumb');
+        if(el){ while(el.firstChild) el.removeChild(el.firstChild); el.appendChild(canvas); }
+      } catch(e){ /* keep placeholder */ }
+    })();
   }
 </script>
 </body>
