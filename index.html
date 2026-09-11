@@ -421,6 +421,33 @@
   }
   .cert-pdf svg{width:12px; height:12px; stroke:var(--gold);}
 
+  /* ---------- Real estate credential feature ---------- */
+  .realestate-feature{
+    display:grid; grid-template-columns:1fr 1.15fr; align-items:stretch;
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-card);
+    overflow:hidden; margin-top:28px; cursor:pointer;
+    transition:border-color .25s, transform .25s;
+  }
+  .realestate-feature:hover{border-color:var(--gold); transform:translateY(-2px);}
+  .realestate-visual{position:relative; min-height:260px; background:#4a3417;}
+  .realestate-visual canvas{width:100%; height:100%; display:block;}
+  .realestate-pin-label{
+    position:absolute; bottom:14px; inset-inline-start:14px;
+    background:rgba(10,10,15,.55); backdrop-filter:blur(4px);
+    color:#fff; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600;
+    padding:6px 12px; border-radius:100px; letter-spacing:.02em;
+  }
+  .realestate-info{padding:34px 32px; display:flex; flex-direction:column; justify-content:center; gap:10px;}
+  .realestate-info .eyebrow{margin:0 0 2px;}
+  .realestate-info h3{margin:0; font-size:21px; font-weight:800; line-height:1.4;}
+  .realestate-info .meta{margin:0; color:var(--text-muted); font-size:13.5px;}
+  .realestate-info .cert-actions{margin-top:6px;}
+  @media (max-width:700px){
+    .realestate-feature{grid-template-columns:1fr;}
+    .realestate-visual{min-height:200px;}
+    .realestate-info{padding:26px 24px;}
+  }
+
   /* ---------- Modal (document/PDF preview) ---------- */
   .modal-overlay{
     position:fixed; inset:0; background:rgba(5,9,18,.82); backdrop-filter:blur(6px);
@@ -571,8 +598,8 @@
       <p class="eyebrow" lang="en">About</p>
       <h2 class="h-title" lang="ar">من قسم العمليات إلى منسق مشروع خلال ٤ أشهر</h2>
       <h2 class="h-title" lang="en">From Operations to Project Coordinator in 4 months</h2>
-      <p class="lead" lang="ar">منسق مشروع في قطاع الاتصالات، أدعم حالياً مشروع سلام موبايل لدى شركة مينا التميز. بدأت في قسم العمليات، وتمت ترقيتي إلى منسق مشروع خلال أربعة أشهر فقط بناءً على الأداء والمبادرة. أجمع بين خبرة عملية في إدارة بيانات الموظفين وتحليل تقارير المبيعات ومتابعة الحضور، ومهارات تقنية في تطوير مواقع الويب. حاصل على دبلوم شبكات الحاسب من جامعة الملك سعود، وعضو معتمد ونشط في الهيئة السعودية للمهندسين.</p>
-      <p class="lead" lang="en">Project Coordinator in the telecom sector, currently supporting the Salam Mobile project at Mina Excellence. Started in Operations and was promoted to Project Coordinator within just four months based on performance and initiative. I combine hands-on experience in employee data management, sales analysis, and attendance tracking with technical web development skills. I hold a Computer Networks Diploma from King Saud University and an active certification from the Saudi Council of Engineers.</p>
+      <p class="lead" lang="ar">منسق مشروع في قطاع الاتصالات، أدعم حالياً مشروع سلام موبايل لدى شركة مشغّلة اتصالات. بدأت في قسم العمليات، وتمت ترقيتي إلى منسق مشروع خلال أربعة أشهر فقط بناءً على الأداء والمبادرة. أجمع بين خبرة عملية في إدارة بيانات الموظفين وتحليل تقارير المبيعات ومتابعة الحضور، ومهارات تقنية في تطوير مواقع الويب. حاصل على دبلوم شبكات الحاسب من جامعة الملك سعود، وعضو معتمد ونشط في الهيئة السعودية للمهندسين.</p>
+      <p class="lead" lang="en">Project Coordinator in the telecom sector, currently supporting the Salam Mobile project at a telecom operator. Started in Operations and was promoted to Project Coordinator within just four months based on performance and initiative. I combine hands-on experience in employee data management, sales analysis, and attendance tracking with technical web development skills. I hold a Computer Networks Diploma from King Saud University and an active certification from the Saudi Council of Engineers.</p>
     </div>
   </div>
 </section>
@@ -590,8 +617,8 @@
         <span class="exp-time" lang="ar">حتى الآن</span>
         <span class="exp-time" lang="en">Present</span>
       </div>
-      <div class="exp-org" lang="ar">مينا التميز — مشروع سلام موبايل | الرياض، السعودية</div>
-      <div class="exp-org" lang="en">Mina Excellence — Salam Mobile Project | Riyadh, Saudi Arabia</div>
+      <div class="exp-org" lang="ar">شركة مشغّلة اتصالات — مشروع سلام موبايل | الرياض، السعودية</div>
+      <div class="exp-org" lang="en">Telecom Operator — Salam Mobile Project | Riyadh, Saudi Arabia</div>
       <ul class="bullets" lang="ar">
         <li>انضممت إلى قسم العمليات وتمت ترقيتي إلى منسق مشروع خلال أربعة أشهر فقط بناءً على أداء متميز ومبادرة شخصية.</li>
         <li>نقطة الاتصال الرئيسية مع إدارة سلام موبايل لتسليم متطلبات المشروع وحل العوائق التشغيلية.</li>
@@ -625,11 +652,11 @@
       <div class="proj-card">
         <div class="proj-shot">
           <span class="proj-status paused"><span class="dot2"></span><span lang="ar">الاستضافة متوقفة مؤقتاً</span><span lang="en">Hosting paused</span></span>
-          <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url-fake" dir="ltr">mina-report.com</span></div>
+          <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url-fake" dir="ltr">ops-report.app</span></div>
           <div class="mock-stage">
             <div class="mock-dash">
               <div class="md-top">
-                <div class="md-brand"><i></i><span dir="ltr">Mina Report</span></div>
+                <div class="md-brand"><i></i><span dir="ltr">Ops Report</span></div>
                 <span class="md-tag" dir="ltr">Today</span>
               </div>
               <div class="md-kpis">
@@ -863,6 +890,34 @@
       <span lang="ar">زر "PDF" يفتح النسخة الأصلية الصادرة من أكاديمية سيسكو، ويمكن تحميلها مباشرة من نافذة المعاينة.</span>
       <span lang="en">The "PDF" button opens the original certificate issued by Cisco Networking Academy — downloadable directly from the preview window.</span>
     </p>
+
+    <div class="realestate-feature" id="realestateFeature" role="button" tabindex="0">
+      <div class="realestate-visual">
+        <canvas id="landCanvas" aria-hidden="true"></canvas>
+        <span class="realestate-pin-label">
+          <span lang="ar">قطعتك المرخّصة</span>
+          <span lang="en">Your licensed parcel</span>
+        </span>
+      </div>
+      <div class="realestate-info">
+        <p class="eyebrow" lang="ar">اعتماد عقاري</p>
+        <p class="eyebrow" lang="en">Real Estate Credential</p>
+        <h3 lang="ar">رخصة فال للوساطة والتسويق العقاري</h3>
+        <h3 lang="en">FAL License — Real Estate Brokerage &amp; Marketing</h3>
+        <p class="meta" lang="ar">الهيئة العامة للعقار (REGA) · رقم الرخصة I00304896 · سارية حتى ٢٦ فبراير ٢٠٢٧</p>
+        <p class="meta" lang="en">Real Estate General Authority (REGA) · License No. I00304896 · Valid until 26 Feb 2027</p>
+        <div class="cert-actions">
+          <span class="cert-pdf" onclick="event.stopPropagation(); openDoc('licenseFAL','licenseFAL','cert','FAL — Real Estate Brokerage License')">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 3v13m0 0-4.5-4.5M12 16l4.5-4.5"/><path d="M4 18v1.5A1.5 1.5 0 0 0 5.5 21h13a1.5 1.5 0 0 0 1.5-1.5V18"/></svg>
+            PDF
+          </span>
+          <span class="cert-open">
+            <span lang="ar">عرض</span><span lang="en">View</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 6l6 6-6 6"/></svg>
+          </span>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -889,8 +944,8 @@
   <div class="footer-mask" aria-hidden="true"></div>
   <h2 lang="ar">لنعمل معاً</h2>
   <h2 lang="en">Let's work together</h2>
-  <p lang="ar">متاح لفرص جديدة في تنسيق المشاريع والشبكات وتطوير الويب.</p>
-  <p lang="en">Open to new opportunities in project coordination, networking, and web development.</p>
+  <p lang="ar">متاح لفرص جديدة في إدارة المشاريع والشبكات وتطوير الويب.</p>
+  <p lang="en">Open to new opportunities in project management, networking, and web development.</p>
 
   <div class="contact-hub">
     <a class="hub-card" href="mailto:fawaz.alrutayq@gmail.com">
@@ -942,6 +997,7 @@
     certIntro: {name:'Certificate-CCNAv7-Introduction-to-Networks.pdf', data:'Certificate-CCNAv7-Introduction-to-Networks.pdf'},
     certSRWE1: {name:'Certificate-CCNAv7-Switching-Routing-Wireless-Jun2022.pdf', data:'Certificate-CCNAv7-Switching-Routing-Wireless-Jun2022.pdf'},
     certSRWE2: {name:'Certificate-CCNAv7-Switching-Routing-Wireless-Feb2023.pdf', data:'Certificate-CCNAv7-Switching-Routing-Wireless-Feb2023.pdf'},
+    licenseFAL: {name:'License-FAL-Real-Estate-Brokerage.pdf', data:'License-FAL-Real-Estate-Brokerage.pdf'},
   };
 
   // Language toggle
@@ -1018,6 +1074,13 @@
       openDoc(key, key, 'cert', certTitle[row.dataset.cert]);
     });
   });
+
+  const realestateFeature = document.getElementById('realestateFeature');
+  if (realestateFeature){
+    const openLicense = () => openDoc('licenseFAL', 'licenseFAL', 'cert', 'FAL — Real Estate Brokerage License');
+    realestateFeature.addEventListener('click', openLicense);
+    realestateFeature.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openLicense(); } });
+  }
 
   // Scroll progress bar + active nav link
   const progress = document.getElementById('navProgress');
@@ -1163,6 +1226,93 @@
     frame();
   })();
 
+  // Real-estate credential visual — a stylized top-down "surveyed land
+  // parcels" illustration (procedurally drawn shapes, not a photo). We have
+  // no real drone footage of the licensed land to show, and using a stock
+  // or generated image while implying it's real aerial footage would be
+  // misleading — so this is deliberately graphic/illustrative rather than
+  // photorealistic, evoking a land survey/plot map instead of pretending
+  // to document an actual site.
+  (function(){
+    const canvas = document.getElementById('landCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const DPR = Math.min(window.devicePixelRatio || 1, 2);
+    let w = 0, h = 0, plots = [], reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function buildPlots(){
+      plots = [];
+      const cols = 6, rows = 5;
+      const cellW = w / cols, cellH = h / rows;
+      for (let r = 0; r < rows; r++){
+        for (let c = 0; c < cols; c++){
+          const pad = 3;
+          const jitter = Math.min(cellW, cellH) * 0.08;
+          plots.push({
+            x: c * cellW + pad + (Math.random() - 0.5) * jitter,
+            y: r * cellH + pad + (Math.random() - 0.5) * jitter,
+            w: cellW - pad * 2,
+            h: cellH - pad * 2,
+            tone: Math.floor(Math.random() * 3)
+          });
+        }
+      }
+      // pick one plot near the center to highlight as "the licensed parcel"
+      plots.highlightIndex = Math.floor(rows / 2) * cols + Math.floor(cols / 2);
+    }
+
+    function resize(){
+      w = canvas.clientWidth; h = canvas.clientHeight;
+      canvas.width = w * DPR; canvas.height = h * DPR;
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      buildPlots();
+    }
+
+    const tones = ['#b98b46', '#a87a3c', '#c79a56'];
+    let t = 0;
+    function draw(){
+      t += 0.02;
+      const grad = ctx.createLinearGradient(0, 0, w, h);
+      grad.addColorStop(0, '#5c4423');
+      grad.addColorStop(1, '#3a2a15');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, w, h);
+
+      plots.forEach((p, i) => {
+        ctx.fillStyle = tones[p.tone];
+        ctx.globalAlpha = i === plots.highlightIndex ? 1 : 0.82;
+        ctx.fillRect(p.x, p.y, p.w, p.h);
+        ctx.globalAlpha = 1;
+        ctx.strokeStyle = 'rgba(255,246,225,.35)';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(p.x, p.y, p.w, p.h);
+      });
+
+      // a couple of straight "roads" crossing the plot grid
+      ctx.strokeStyle = 'rgba(255,246,225,.5)';
+      ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(0, h * 0.42); ctx.lineTo(w, h * 0.42); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(w * 0.5, 0); ctx.lineTo(w * 0.5, h); ctx.stroke();
+
+      // pulsing pin on the highlighted (licensed) parcel
+      const hp = plots[plots.highlightIndex];
+      if (hp){
+        const cx = hp.x + hp.w / 2, cy = hp.y + hp.h / 2;
+        const pulse = reduced ? 1 : 1 + Math.sin(t) * 0.12;
+        ctx.strokeStyle = `rgba(255,255,255,${reduced ? .95 : 0.7 + Math.sin(t) * 0.25})`;
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.arc(cx, cy, 16 * pulse, 0, Math.PI * 2); ctx.stroke();
+        ctx.fillStyle = '#fff';
+        ctx.beginPath(); ctx.arc(cx, cy, 5, 0, Math.PI * 2); ctx.fill();
+      }
+
+      if (!reduced) requestAnimationFrame(draw);
+    }
+    window.addEventListener('resize', resize);
+    resize();
+    draw();
+  })();
+
   // GSAP + ScrollTrigger — cinematic scroll-driven reveals and hero parallax.
   // Loaded asynchronously, after every bit of core site JS above has already
   // run, so a slow/blocked CDN can never delay or freeze the rest of the
@@ -1211,6 +1361,7 @@
     revealEach('.about-text');
     revealEach('.sce-badge');
     revealGroup('.cert-row', '.cert-list');
+    revealEach('.realestate-feature');
     revealEach('.exp-card');
     revealGroup('.proj-card', '.proj-grid');
     revealGroup('.skill-group', '.skill-groups');
