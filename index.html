@@ -7,14 +7,22 @@
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>فواز صالح الرتيق — Fawaz Saleh Al-Rutayq</title>
 <meta name="description" content="فواز صالح الرتيق — منسق مشاريع ومطوّر مواقع، دبلوم شبكات حاسب (سيسكو) من جامعة الملك سعود. خدمات تصميم وتطوير مواقع إلكترونية احترافية للشركات والأفراد بأسعار منافسة. شهادات CCNAv7 ورخصة فال عقارية.">
+<meta name="keywords" content="Fawaz Al-Rutayq, فواز الرتيق, web developer, مطور مواقع, project coordinator, منسق مشاريع, Riyadh, الرياض, portfolio, CCNA, web design, تصميم مواقع">
+<link rel="alternate" hreflang="ar" href="https://fawaz.my/">
+<link rel="alternate" hreflang="en" href="https://fawaz.my/">
+<link rel="alternate" hreflang="x-default" href="https://fawaz.my/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="فواز صالح الرتيق — Fawaz Saleh Al-Rutayq">
 <meta property="og:description" content="منسق مشاريع ومطوّر مواقع — خدمات تصميم مواقع احترافية بأسعار منافسة. شبكات وشهادات معتمدة ورخصة وساطة عقارية.">
 <meta property="og:url" content="https://fawaz.my/">
 <meta property="og:locale" content="ar_SA">
+<meta property="og:image" content="https://fawaz.my/favicon-512.png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="فواز صالح الرتيق — Fawaz Saleh Al-Rutayq">
 <meta name="twitter:description" content="منسق مشاريع ومطوّر مواقع — خدمات تصميم مواقع احترافية بأسعار منافسة. شهادات معتمدة ورخصة عقارية.">
+<meta name="twitter:image" content="https://fawaz.my/favicon-512.png">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="favicon-32.png" sizes="32x32">
 <link rel="icon" type="image/png" href="favicon-192.png" sizes="192x192">
@@ -24,9 +32,10 @@
 <link rel="canonical" href="https://fawaz.my/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"ProfilePage","mainEntity":{"@type":"Person","name":"Fawaz Saleh Al-Rutayq","alternateName":"فواز صالح الرتيق","jobTitle":"Salam Mobile Project Coordinator","url":"https://fawaz.my/","email":"fawaz.alrutayq@gmail.com","telephone":"+966576047774","address":{"@type":"PostalAddress","addressLocality":"Riyadh","addressCountry":"SA"},"alumniOf":{"@type":"EducationalOrganization","name":"King Saud University"},"knowsAbout":["Web Development","Networking","Project Coordination","Cisco CCNA"],"hasCredential":[{"@type":"EducationalOccupationalCredential","name":"Saudi Council of Engineers (SCE) — Certified Network Technician","credentialCategory":"Professional Certification"},{"@type":"EducationalOccupationalCredential","name":"CCNAv7: Switching, Routing & Wireless Essentials","credentialCategory":"Technical Certification"},{"@type":"EducationalOccupationalCredential","name":"FAL License — Real Estate Brokerage & Marketing","credentialCategory":"Professional License"}],"makesOffer":{"@type":"Offer","itemOffered":{"@type":"Service","name":"Web Development Services","description":"Professional website design and development for businesses and individuals"}}}}
+{"@context":"https://schema.org","@type":"ProfilePage","mainEntity":{"@type":"Person","name":"Fawaz Saleh Al-Rutayq","alternateName":"فواز صالح الرتيق","jobTitle":"Salam Mobile Project Coordinator","url":"https://fawaz.my/","email":"fawaz.alrutayq@gmail.com","telephone":"+966576047774","address":{"@type":"PostalAddress","addressLocality":"Riyadh","addressCountry":"SA"},"alumniOf":{"@type":"EducationalOrganization","name":"King Saud University"},"knowsAbout":["Web Development","Networking","Project Coordination","Cisco CCNA","HTML","CSS","JavaScript","SEO"],"hasCredential":[{"@type":"EducationalOccupationalCredential","name":"Saudi Council of Engineers (SCE) — Certified Network Technician","credentialCategory":"Professional Certification"},{"@type":"EducationalOccupationalCredential","name":"CCNAv7: Switching, Routing & Wireless Essentials","credentialCategory":"Technical Certification"},{"@type":"EducationalOccupationalCredential","name":"FAL License — Real Estate Brokerage & Marketing","credentialCategory":"Professional License"}],"makesOffer":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Business Website Development","description":"Professional websites for companies reflecting brand identity with responsive design"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Landing Page Design","description":"Marketing-focused landing pages for product launches and lead generation"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Personal Portfolio Development","description":"Modern personal websites showcasing qualifications and projects with bilingual support"}}],"sameAs":["https://wa.me/966576047774"]}}
 </script>
 <style>
   :root{
@@ -50,7 +59,7 @@
     --maxw:960px;
   }
   *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+  html{scroll-behavior:smooth; scroll-padding-top:72px;}
   body{
     margin:0;
     background:
@@ -91,6 +100,11 @@
     backdrop-filter:blur(10px);
     background:rgba(10,18,32,.72);
     border-bottom:1px solid rgba(255,255,255,.06);
+    transition:box-shadow .3s, background .3s;
+  }
+  header.nav.scrolled{
+    background:rgba(10,18,32,.92);
+    box-shadow:0 4px 20px rgba(0,0,0,.3);
   }
   .nav-progress{position:absolute; bottom:-1px; right:0; inset-inline-start:0; height:2px; background:linear-gradient(90deg, var(--teal), var(--gold)); width:0%; transition:width .1s linear;}
   .nav-inner{
@@ -119,7 +133,92 @@
     transition:border-color .2s, color .2s;
   }
   #langToggle:hover{border-color:var(--teal); color:var(--teal);}
-  @media (max-width:700px){ nav.links{display:none;} }
+  /* Mobile hamburger menu */
+  .hamburger{
+    display:none; background:none; border:none; cursor:pointer; padding:4px;
+    width:32px; height:32px; position:relative; z-index:55;
+  }
+  .hamburger span{
+    display:block; width:20px; height:2px; background:var(--text); margin:4px auto;
+    border-radius:2px; transition:transform .3s, opacity .2s;
+  }
+  .hamburger.open span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+  .hamburger.open span:nth-child(2){opacity:0;}
+  .hamburger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+  @media (max-width:700px){
+    nav.links{
+      display:none; position:fixed; top:0; right:0; left:0; bottom:0;
+      background:rgba(5,6,8,.96); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+      flex-direction:column; align-items:center; justify-content:center; gap:28px;
+      font-size:20px; z-index:52;
+    }
+    nav.links.open{display:flex;}
+    .hamburger{display:block;}
+  }
+
+  /* Skip-to-content (accessibility) */
+  .skip-link{
+    position:absolute; top:-100%; left:16px; background:var(--teal); color:#fff;
+    padding:10px 18px; border-radius:8px; font-size:14px; font-weight:600;
+    z-index:200; text-decoration:none; transition:top .2s;
+  }
+  .skip-link:focus{top:8px;}
+
+  /* Back to Top button */
+  .back-top{
+    position:fixed; bottom:92px; right:20px; inset-inline-end:20px;
+    width:44px; height:44px; border-radius:50%; border:1px solid var(--line);
+    background:rgba(18,19,28,.9); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+    color:var(--text); cursor:pointer; display:flex; align-items:center; justify-content:center;
+    opacity:0; pointer-events:none; transform:translateY(10px);
+    transition:opacity .3s, transform .3s, border-color .2s;
+    z-index:40;
+  }
+  .back-top.visible{opacity:1; pointer-events:auto; transform:translateY(0);}
+  .back-top:hover{border-color:var(--teal);}
+  .back-top svg{width:18px; height:18px; stroke:var(--teal); fill:none; stroke-width:2;}
+
+  /* Floating WhatsApp button */
+  @keyframes wa-ping{0%{box-shadow:0 0 0 0 rgba(37,211,102,.5);}70%{box-shadow:0 0 0 14px rgba(37,211,102,0);}100%{box-shadow:0 0 0 0 rgba(37,211,102,0);}}
+  .wa-float{
+    position:fixed; bottom:28px; right:20px; inset-inline-end:20px;
+    width:52px; height:52px; border-radius:50%;
+    background:#25d366; color:#fff; border:none; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 4px 16px rgba(37,211,102,.35);
+    z-index:40; text-decoration:none;
+    transition:transform .25s, box-shadow .25s;
+    animation:wa-ping 2.5s ease-in-out 3s 3;
+  }
+  .wa-float:hover{transform:scale(1.08); box-shadow:0 6px 22px rgba(37,211,102,.45);}
+  .wa-float svg{width:26px; height:26px; fill:#fff;}
+  .wa-float .wa-tooltip{
+    position:absolute; right:calc(100% + 10px); inset-inline-end:calc(100% + 10px);
+    top:50%; transform:translateY(-50%); white-space:nowrap;
+    background:var(--surface); color:var(--text); font-size:12.5px; font-weight:600;
+    padding:7px 14px; border-radius:8px; border:1px solid var(--line);
+    opacity:0; pointer-events:none; transition:opacity .25s;
+    font-family:'Cairo','Space Grotesk',sans-serif;
+  }
+  .wa-float:hover .wa-tooltip{opacity:1;}
+
+  /* Print styles */
+  @media print{
+    header.nav, #bgNet, .back-top, .wa-float, .cv-bar, .modal-overlay,
+    .nav-progress, .skip-link, .hamburger{display:none !important;}
+    body{background:#fff !important; color:#000 !important;}
+    section{padding:24px 0; break-inside:avoid;}
+    .hero{padding:40px 0 20px;}
+    a{color:#000; text-decoration:underline;}
+    .contact-pill, .hub-card, .chip, .tool-tag, .svc-card, .proj-card, .cert-row,
+    .exp-card, .edu-card, .sce-badge, .realestate-feature{
+      border-color:#ccc !important; background:#f9f9f9 !important;
+      color:#000 !important; box-shadow:none !important;
+    }
+    .stat-num, .eyebrow, .teal{color:#333 !important;}
+    .bar-fill{background:#666 !important;}
+    footer{background:#f5f5f5 !important; border-top:1px solid #ccc !important;}
+  }
 
   /* ---------- Hero ---------- */
   .hero{
@@ -382,7 +481,8 @@
     display:inline-flex; align-items:center; gap:6px; font-family:'Space Grotesk',sans-serif;
     font-size:13px; font-weight:600; color:var(--teal); text-decoration:none;
   }
-  .proj-link svg{width:13px; height:13px; stroke:var(--teal);}
+  .proj-link svg{width:13px; height:13px; stroke:var(--teal); transition:transform .2s;}
+  .proj-link:hover svg{transform:translateX(3px);}
   .proj-link.disabled{color:var(--text-muted); cursor:default;}
   .proj-link.disabled svg{stroke:var(--text-muted);}
 
@@ -396,7 +496,9 @@
   .chip{
     background:var(--surface); border:1px solid var(--line); color:#dbe6f6;
     padding:8px 15px; border-radius:9px; font-size:13.5px;
+    transition:border-color .2s, transform .2s, background .2s;
   }
+  .chip:hover{border-color:var(--teal-dim); transform:translateY(-2px); background:var(--surface-2);}
 
   /* ---------- Education ---------- */
   .edu-card{
@@ -526,7 +628,7 @@
   .lang-row{display:flex; align-items:center; gap:16px;}
   .lang-row .lbl{width:110px; font-size:14.5px; flex-shrink:0;}
   .bar-track{flex:1; height:8px; background:var(--surface); border-radius:100px; overflow:hidden;}
-  .bar-fill{height:100%; border-radius:100px; background:linear-gradient(90deg, var(--teal-dim), var(--teal));}
+  .bar-fill{height:100%; border-radius:100px; background:linear-gradient(90deg, var(--teal-dim), var(--teal)); transition:width 1.2s cubic-bezier(.23,1,.32,1);}
 
   /* ---------- Web Services ---------- */
   .services-intro{text-align:center; max-width:640px; margin:0 auto 36px; color:var(--text-muted); font-size:15.5px; line-height:1.7;}
@@ -540,9 +642,11 @@
   .svc-icon{
     width:52px; height:52px; border-radius:14px; margin:0 auto 16px;
     display:flex; align-items:center; justify-content:center;
-    background:rgba(139,107,255,.1);
+    background:rgba(139,107,255,.1); transition:background .25s;
   }
-  .svc-icon svg{width:26px; height:26px; stroke:var(--teal); fill:none; stroke-width:1.7;}
+  .svc-icon svg{width:26px; height:26px; stroke:var(--teal); fill:none; stroke-width:1.7; transition:stroke .25s;}
+  .svc-card:hover .svc-icon svg{stroke:var(--accent2);}
+  .svc-card:hover .svc-icon{background:rgba(34,230,255,.1);}
   .svc-card h3{font-size:16px; font-weight:700; margin:0 0 8px;}
   .svc-card p{font-size:13.5px; color:var(--text-muted); margin:0; line-height:1.6;}
   .tools-strip{display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-bottom:36px;}
@@ -598,17 +702,37 @@
   .hub-card span.val{font-size:12px; color:var(--text-muted); direction:ltr;}
   .foot-note{margin-top:44px; font-size:12.5px; color:#4d5d7c;}
 
+  /* Page loading animation */
+  @keyframes fadeInUp{from{opacity:0; transform:translateY(16px);}to{opacity:1; transform:translateY(0);}}
+  body{animation:fadeInUp .6s ease forwards;}
+
+  /* Subtle card hover glow */
+  .proj-card:hover, .svc-card:hover, .hub-card:hover{
+    box-shadow:0 8px 32px rgba(139,107,255,.08);
+  }
+  .exp-card{transition:border-color .25s, box-shadow .25s;}
+  .exp-card:hover{border-color:var(--teal-dim); box-shadow:0 8px 32px rgba(139,107,255,.06);}
+
+  /* Smooth focus styles for keyboard navigation */
+  :focus-visible{outline:2px solid var(--teal); outline-offset:3px; border-radius:4px;}
+  button:focus-visible, a:focus-visible{outline:2px solid var(--teal); outline-offset:3px;}
+
+  /* Selection highlight color */
+  ::selection{background:rgba(139,107,255,.3); color:var(--text);}
+
   @media (prefers-reduced-motion: reduce){
     *{animation:none !important; transition:none !important;}
-    .badge-ring, h1.name, .title-line, .contact-row{opacity:1 !important; transform:none !important;}
+    body, .badge-ring, h1.name, .title-line, .contact-row{opacity:1 !important; transform:none !important;}
   }
 </style>
 </head>
 <body>
 
-<canvas id="bgNet"></canvas>
+<a class="skip-link" href="#about"><span lang="ar">تخطي إلى المحتوى</span><span lang="en">Skip to content</span></a>
 
-<header class="nav">
+<canvas id="bgNet" aria-hidden="true"></canvas>
+
+<header class="nav" role="banner">
   <div class="nav-inner">
     <div class="brand">
       <span class="brand-mark">
@@ -619,7 +743,7 @@
         <span class="brand-status"><span class="status-dot"></span><span lang="ar">متاح لفرص جديدة</span><span lang="en">Open to opportunities</span></span>
       </div>
     </div>
-    <nav class="links">
+    <nav class="links" role="navigation" aria-label="Main navigation">
       <a href="#about" lang="ar">نبذة</a><a href="#about" lang="en">About</a>
       <a href="#experience" lang="ar">الخبرة</a><a href="#experience" lang="en">Experience</a>
       <a href="#projects" lang="ar">المشاريع</a><a href="#projects" lang="en">Projects</a>
@@ -630,11 +754,13 @@
     </nav>
     <div class="nav-actions">
       <button id="langToggle">عربي</button>
+      <button class="hamburger" id="menuToggle" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </div>
   <div class="nav-progress" id="navProgress"></div>
 </header>
 
+<main>
 <section class="hero">
   <div class="hero-inner">
     <div class="badge-ring">
@@ -653,6 +779,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .5 1 1.1v3.4c0 .6-.5 1-1.1 1C9.9 21 3 14.1 3 5.6c0-.6.5-1 1-1H7.5c.6 0 1 .4 1.1 1 .1 1.3.3 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8Z"/></svg>
         <span dir="ltr">+966 57 604 7774</span>
         <span class="copy-toast"><span lang="ar">تم النسخ</span><span lang="en">Copied</span></span>
+      </a>
+      <a class="contact-pill" href="https://wa.me/966576047774" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M3 21l1.4-4.2A8 8 0 1 1 8 19.5L3 21Z"/><path d="M8.5 9.5c.3 2.4 2.6 4.7 5 5"/></svg>
+        <span lang="ar">واتساب</span><span lang="en">WhatsApp</span>
       </a>
       <a class="contact-pill" href="mailto:fawaz.alrutayq@gmail.com" data-copy="fawaz.alrutayq@gmail.com">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 6.5 8 6 8-6"/></svg>
@@ -1131,6 +1261,8 @@
   </div>
 </section>
 
+</main>
+
 <footer id="contact">
   <div class="footer-mask" aria-hidden="true"></div>
   <h2 lang="ar">لنعمل معاً</h2>
@@ -1155,8 +1287,26 @@
       <span class="val">+966 57 604 7774</span>
     </a>
   </div>
-  <p class="foot-note" dir="ltr">Fawaz Saleh Al-Rutayq · Riyadh, Saudi Arabia</p>
+  <p class="foot-note" dir="ltr">&copy; <span id="footYear">2026</span> Fawaz Saleh Al-Rutayq · Riyadh, Saudi Arabia</p>
 </footer>
+
+<noscript>
+  <style>
+    .badge-ring, h1.name, .title-line, .contact-row{opacity:1 !important; transform:none !important;}
+    .bar-fill{transition:none !important;}
+    nav.links{display:flex !important; position:static !important; background:none !important;}
+    .hamburger{display:none !important;}
+  </style>
+</noscript>
+
+<button class="back-top" id="backTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24"><path d="M12 19V5m0 0-6 6m6-6 6 6"/></svg>
+</button>
+
+<a class="wa-float" href="https://wa.me/966576047774" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <span class="wa-tooltip" lang="ar">تواصل عبر واتساب</span><span class="wa-tooltip" lang="en">Chat on WhatsApp</span>
+</a>
 
 <div class="modal-overlay doc-modal" id="docOverlay">
   <div class="cert-paper">
@@ -1220,6 +1370,32 @@
     });
   });
 
+  // Mobile hamburger menu
+  const menuBtn = document.getElementById('menuToggle');
+  const navLinks = document.querySelector('nav.links');
+  menuBtn.addEventListener('click', () => {
+    menuBtn.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      menuBtn.classList.remove('open');
+      navLinks.classList.remove('open');
+    });
+  });
+
+  // Dynamic copyright year
+  var fy = document.getElementById('footYear');
+  if (fy) fy.textContent = new Date().getFullYear();
+
+  // Back to top button
+  const backTopBtn = document.getElementById('backTop');
+  function checkBackTop(){
+    backTopBtn.classList.toggle('visible', window.scrollY > 500);
+  }
+  window.addEventListener('scroll', checkBackTop, {passive:true});
+  backTopBtn.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
   // Document preview modal (CV + certificate PDFs)
   const docOverlay = document.getElementById('docOverlay');
   const docFrame = document.getElementById('docFrame');
@@ -1277,7 +1453,13 @@
   }
   document.getElementById('docClose').addEventListener('click', closeDoc);
   docOverlay.addEventListener('click', e => { if (e.target === docOverlay) closeDoc(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDoc(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape'){
+      closeDoc();
+      menuBtn.classList.remove('open');
+      navLinks.classList.remove('open');
+    }
+  });
 
   // Certificates open the real PDF directly (same clear, zoomable viewer as
   // the CV) — full legibility matters more here than any visual effect.
@@ -1311,11 +1493,14 @@
   // Scroll progress bar + active nav link
   const progress = document.getElementById('navProgress');
   const navLinksEls = document.querySelectorAll('nav.links a');
-  const sectionIds = ['about','experience','projects','skills','certificates','contact'];
+  const sectionIds = ['about','experience','projects','skills','certificates','services','contact'];
+  const navHeader = document.querySelector('header.nav');
   function onScroll(){
     const doc = document.documentElement;
     const pct = (doc.scrollTop) / (doc.scrollHeight - doc.clientHeight) * 100;
     progress.style.width = Math.min(100, Math.max(0, pct)) + '%';
+
+    navHeader.classList.toggle('scrolled', window.scrollY > 60);
 
     let current = sectionIds[0];
     for (const id of sectionIds){
@@ -1602,9 +1787,22 @@
     revealGroup('.proj-card', '.proj-grid');
     revealGroup('.skill-group', '.skill-groups');
     revealEach('.edu-card');
+    revealEach('.lang-bars');
     revealEach('.svc-card');
     revealEach('.svc-cta');
-    revealEach('footer#contact h2, footer#contact p, footer#contact .contact-hub, footer#contact .foot-note');
+    revealEach('.tools-strip');
+    revealGroup('.hub-card', '.contact-hub');
+    revealEach('footer#contact h2, footer#contact p, footer#contact .foot-note');
+
+    // Language bar fill animation on scroll
+    document.querySelectorAll('.bar-fill').forEach(bar => {
+      const w = bar.style.width;
+      bar.style.width = '0%';
+      gsap.to(bar, {
+        width: w, duration: 1.4, ease: 'power2.out',
+        scrollTrigger: {trigger: bar, start: 'top 90%', toggleActions: 'play none none reverse'}
+      });
+    });
 
     // Footer color-mask "shift reveal" — scrubs open as the footer scrolls into view.
     gsap.to('.footer-mask', {
